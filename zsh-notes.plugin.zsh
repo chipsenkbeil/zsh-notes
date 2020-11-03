@@ -23,8 +23,12 @@ notes() {
   local date="$(date +'%Y-%m-%d')"
   local human_date="$(date +'%A, %B %d, %Y (%Y-%m-%d)')"
 
-  local base_path="$HOME/.notes"
-  mkdir -p "$base_path"
+  if [[ -d "$HOME/.notes" ]]; then
+    local base_path="$HOME/.notes"
+  else
+    local base_path="${XDG_DATA_HOME:-$HOME/.local/share}/notes"
+    mkdir -p "$base_path"
+  fi
 
   local DEFAULT_NOTE_FILE="default"
   local DEFAULT_NOTE_NAME="default"
@@ -124,4 +128,3 @@ By default, if no command is provided and a name is provided, the note with the 
 provided name will be opened (or created if does not exist) for editing."
   fi
 }
-
